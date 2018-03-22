@@ -15,7 +15,7 @@
      </tr>
     <tr>
         <td>Certificação OCJP</td>
-        <td>Java 8 Prático</td>
+        <td>Java 10 Prático</td>
     </tr>
 </table>
 </body>
