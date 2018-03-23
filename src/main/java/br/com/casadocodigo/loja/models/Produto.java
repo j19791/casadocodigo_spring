@@ -1,6 +1,24 @@
 package br.com.casadocodigo.loja.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity // definir que o produto é uma entidade para ser usado pelo JPA
 public class Produto {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // o hibernate obriga que toda entidade precisa de um id
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getTitulo() {
 		return titulo;

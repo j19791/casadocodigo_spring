@@ -6,11 +6,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.casadocodigo.loja.controllers.HomeController;
+import br.com.casadocodigo.loja.daos.ProdutoDAO;
 
 @EnableWebMvc // anotamos que precisamos usar o recurso de Web MVC do SpringMVC
-@ComponentScan(basePackageClasses = { HomeController.class }) // array de classes de onde o SpringMVC pode extrair os
-																// pacotes nos quais ele pode encontrar os controllers
-																// automaticamente
+@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class }) // array de classes de onde o SpringMVC
+																				// pode extrair os
+// pacotes nos quais ele pode encontrar os controllers
+// automaticamente
+// onfigurar para que encontre nossos daos também.
 public class AppWebConfiguration {
 
 	@Bean // @Bean - retorno da chamada deste metódo possa ser gerenciada pelo SpringMVC
