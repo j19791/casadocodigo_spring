@@ -4,12 +4,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.casadocodigo.loja.models.Produto;
 
 @Repository // devemos definir que o ProdutoDAO será gerenciado pelo Spring
 // classe de acesso a dados responsável por manipular os dados dos produtos :
 // realizar a persistencia
+@Transactional // o spring vai cuidar da transacao do dao
 public class ProdutoDAO {
 
 	@PersistenceContext // fornecedido pelo Spring

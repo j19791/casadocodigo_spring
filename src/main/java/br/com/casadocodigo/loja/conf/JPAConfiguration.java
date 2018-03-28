@@ -2,12 +2,17 @@ package br.com.casadocodigo.loja.conf;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableTransactionManagement // o Spring ativa o gerenciamento de transações - habilitado
 public class JPAConfiguration {// estamos fornecendo para o Spring qual é o banco, o usuário ou a senha do
 								// banco de dados.
 
@@ -38,5 +43,13 @@ public class JPAConfiguration {// estamos fornecendo para o Spring qual é o ban
 		factoryBean.setPackagesToScan("br.com.casadocodigo.loja.models"); // aonde o EM encontrara as entidades
 
 		return factoryBean;
+	}
+
+	@Bean
+	// nossa operação com o banco de dados deve ser gerenciada com uma transação.
+	// precisaremos de um TransactionManager que conheça o EntityManager para
+	// gerenciar as transações das entidades
+	public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
 	}
 }
