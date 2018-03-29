@@ -1,5 +1,8 @@
 package br.com.casadocodigo.loja.models;
 
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,7 +52,19 @@ public class Produto {
 		this.paginas = paginas;
 	}
 
+	public List<Preco> getPrecos() {
+		return precos;
+	}
+
+	public void setPrecos(List<Preco> precos) {
+		this.precos = precos;
+	}
+
 	private String titulo;
 	private String descricao;
 	private int paginas;
+
+	@ElementCollection // vai criar uma tabela chamada Produto_Preco com Produto_id, tipo, valor
+	private List<Preco> precos; // precos podem ser de impresso, ebook ou ebook+impresso e além
+
 }
