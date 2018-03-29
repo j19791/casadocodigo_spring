@@ -20,6 +20,12 @@ public class ProdutosController {
 	 * public String form() { System.out.println("entrou"); return "produtos/form";
 	 * }
 	 */
+	// Quando utilizamos o ModelAndView, além retornar uma página, temos a
+	// possibilidade de enviar objetos de qualquer classe para essas páginas. Em
+	// outras palavras, dessa forma somos capazes de exibir, por exemplo, as
+	// informações das nossas classes modelos.
+	// envie a String "tipos" e os valores do enum TipoPreco a partir do método
+	// values()
 	public ModelAndView form() {
 
 		ModelAndView modelAndView = new ModelAndView("produtos/form");// para que o Spring entenda qual o arquivo que
