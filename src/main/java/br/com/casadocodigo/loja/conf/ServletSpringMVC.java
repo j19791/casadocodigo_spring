@@ -1,5 +1,8 @@
 package br.com.casadocodigo.loja.conf;
 
+import javax.servlet.Filter;
+
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 // configuração do SpringMVC para atender as requisições que chegam para nossa aplicação
@@ -22,6 +25,14 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	protected String[] getServletMappings() { // array com os mapeamentos que queremos que nosso servlet atenda
 		return new String[] { "/" }; // o servlet do SpringMVC atenderá as requisições a partir da raiz do nosso
 										// projeto (/)
+	}
+
+	@Override
+	protected Filter[] getServletFilters() {// ao receber a requisição, o Spring filtra a requisição com o encoding que
+											// vamos configurar
+		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+		encodingFilter.setEncoding("UTF-8"); // adicionar este filtro ao array de filtros
+		return new Filter[] { encodingFilter }; // retornar o filtro configurado (o array) para o Spring
 	}
 
 }
