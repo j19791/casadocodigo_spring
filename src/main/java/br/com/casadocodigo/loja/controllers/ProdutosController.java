@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
 import br.com.casadocodigo.loja.models.Produto;
@@ -47,15 +48,37 @@ public class ProdutosController {
 	// method=RequestMethod: diferenciando as rotas
 	// pelos métodos usados pelo protocolo HTTP.
 	// post utilizado para envio de forms
-	public String gravar(Produto produto) {
+	public ModelAndView gravar(Produto produto, RedirectAttributes redirectAttributes) {
 		// O SpringMVC sozinho verifica a assinatura do nosso método e faz um bind dos
 		// parâmetros do método com os names do formulário.
 		System.out.println(produto);
 
 		produtoDao.gravar(produto);
 
-		return "/produtos/ok";
-
+		// return "/produtos/ok"; // alterando para retornar p/ lista de produtos após o
+		// cadastro
+		// return "produtos"; //erro: o spring vai mandar para a pagina produtos.jsp q
+		// não existe
+		// return listar(); //bug do f5 - navegador nos questiona se queremos resubmeter
+		// o formulário ao clciar f5
+		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso!");// recurso do Spring que nos
+																							// permite enviar
+																							// informações entre
+																							// requisições. Usaremos
+																							// então esse objeto para
+																							// adicionar um atributo do
+																							// tipo Flash , passando
+																							// assim a uma chave /valor.
+																							// Eles só duram até a
+																							// próxima requisição, ou
+																							// seja, transportam
+																							// informações de uma
+																							// requisição para a outra e
+																							// então, deixam de existir.
+		return new ModelAndView("redirect:produtos"); // usaremos um recurso chamado de redirect, que passa um status
+														// para o navegador carregar uma outra página e esquecer dos
+														// dados da requisição anterior.
+														// Always redirect after post
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

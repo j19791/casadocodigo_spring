@@ -11,6 +11,7 @@
 </head>
 <body>
 <h1>Lista de Produtos</h1>
+<p> ${sucesso} </p>
 <table border="1">
         <tr>
             <td>Título</td>
