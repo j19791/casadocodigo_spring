@@ -15,6 +15,14 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // o hibernate obriga que toda entidade precisa de um id
 	private int id;
 
+	private String titulo;// String: objeto: pode receber null
+	private String descricao;
+	private int paginas; // int : tipo primitivo : não pode receber null
+
+	@ElementCollection // vai criar uma tabela chamada Produto_Preco com Produto_id, tipo, valor
+	private List<Preco> precos; // precos podem ser de impresso, ebook ou ebook+impresso e além
+	// list: objeto: pode recebr null
+
 	public int getId() {
 		return id;
 	}
@@ -59,12 +67,5 @@ public class Produto {
 	public void setPrecos(List<Preco> precos) {
 		this.precos = precos;
 	}
-
-	private String titulo;
-	private String descricao;
-	private int paginas;
-
-	@ElementCollection // vai criar uma tabela chamada Produto_Preco com Produto_id, tipo, valor
-	private List<Preco> precos; // precos podem ser de impresso, ebook ou ebook+impresso e além
 
 }

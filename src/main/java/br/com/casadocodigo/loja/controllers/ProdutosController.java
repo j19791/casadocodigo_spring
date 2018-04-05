@@ -2,8 +2,13 @@ package br.com.casadocodigo.loja.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
 import br.com.casadocodigo.loja.models.Produto;
 import br.com.casadocodigo.loja.models.TipoPreco;
+import br.com.casadocodigo.loja.validation.ProdutoValidation;
 
 @Controller
 @RequestMapping("produtos") // Para que não precisemos ficar passando /produtos em todos os métodos do
@@ -20,6 +26,15 @@ public class ProdutosController {
 
 	@Autowired // O Spring cria o ProdutoDAO
 	private ProdutoDAO produtoDao;
+
+	@InitBinder // O Binder, por assim dizer, é o responsável por conectar duas coisas. Por
+				// exemplo, os dados do formulário com o objeto da classe Produto
+	// Para que o ProdutoController e o Spring possa reconhecer o nosso validador,
+	public void InitBinder(WebDataBinder binder) {
+		binder.addValidators(new ProdutoValidation());// recebe uma instância de uma classe (ProdutoValidation) )que
+														// implemente a interface Validator do pacote
+														// org.springframwork.validation
+	}
 
 	// @RequestMapping("/produtos/form")
 	@RequestMapping("/form")
@@ -48,10 +63,15 @@ public class ProdutosController {
 	// method=RequestMethod: diferenciando as rotas
 	// pelos métodos usados pelo protocolo HTTP.
 	// post utilizado para envio de forms
-	public ModelAndView gravar(Produto produto, RedirectAttributes redirectAttributes) {
+	// @Valid: utilizando javax.validation (bean validation)
+	public ModelAndView gravar(@Valid Produto produto, BindingResult result, // resultado da verificação
+			RedirectAttributes redirectAttributes) {
 		// O SpringMVC sozinho verifica a assinatura do nosso método e faz um bind dos
 		// parâmetros do método com os names do formulário.
-		System.out.println(produto);
+
+		if (result.hasErrors()) {// se houver erros, voltaremos para o formulário
+			return form();
+		}
 
 		produtoDao.gravar(produto);
 
