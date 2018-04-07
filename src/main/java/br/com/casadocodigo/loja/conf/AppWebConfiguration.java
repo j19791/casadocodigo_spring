@@ -1,7 +1,9 @@
 package br.com.casadocodigo.loja.conf;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -23,6 +25,17 @@ public class AppWebConfiguration {
 		resolver.setPrefix("/WEB-INF/views/"); // pasta aonde q estao as views
 		resolver.setSuffix(".jsp"); // extensao do arquivo da view. nao precisa digita-lo no controller
 		return resolver;
+	}
+
+	// precisamos configurar o Spring para que ele encontre esse nosso arquivos de
+	// mensagens
+	@Bean // para que o Spring possa reconhecer essa configuração.
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("/WEB-INF/messages");// terá o nome base dos nossos resources
+		messageSource.setDefaultEncoding("UTF-8");// para evitar o problema de caracteres estranhos
+		messageSource.setCacheSeconds(1);// para que o Spring recarregue o arquivo de tempos em tempos
+		return messageSource;
 	}
 
 }

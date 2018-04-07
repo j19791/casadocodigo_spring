@@ -20,8 +20,8 @@ import br.com.casadocodigo.loja.models.TipoPreco;
 import br.com.casadocodigo.loja.validation.ProdutoValidation;
 
 @Controller
-@RequestMapping("produtos") // Para que não precisemos ficar passando /produtos em todos os métodos do
-							// controller,
+@RequestMapping("/produtos") // Para que não precisemos ficar passando /produtos em todos os métodos do
+								// controller,
 public class ProdutosController {
 
 	@Autowired // O Spring cria o ProdutoDAO
