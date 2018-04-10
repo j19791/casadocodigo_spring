@@ -1,5 +1,6 @@
 package br.com.casadocodigo.loja.models;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity // definir que o produto é uma entidade para ser usado pelo JPA
 public class Produto {
@@ -18,6 +21,14 @@ public class Produto {
 	private String titulo;// String: objeto: pode receber null
 	private String descricao;
 	private int paginas; // int : tipo primitivo : não pode receber null
+
+	// @DateTimeFormat(pattern = "dd/MM/yyyy") // definir padrao de data p/ o Spring
+	// converter texto para Calendar
+	// corretamente
+	@DateTimeFormat // usando o padrao configurado no mvcConversionService do AppWebConfiguration
+					// (padrão p/ toda aplicação - não precisa do pattern)
+	private Calendar dataLancamento; // Existem duas principais classes para trabalhar com datas: Date e a Calendar.
+										// Calendar é mais recente e simples de usar
 
 	@ElementCollection // vai criar uma tabela chamada Produto_Preco com Produto_id, tipo, valor
 	private List<Preco> precos; // precos podem ser de impresso, ebook ou ebook+impresso e além
@@ -66,6 +77,14 @@ public class Produto {
 
 	public void setPrecos(List<Preco> precos) {
 		this.precos = precos;
+	}
+
+	public Calendar getDataLancamento() {
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(Calendar dataLancamento) {
+		this.dataLancamento = dataLancamento;
 	}
 
 }

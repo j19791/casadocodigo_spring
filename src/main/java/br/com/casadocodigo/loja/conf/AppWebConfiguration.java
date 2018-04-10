@@ -4,6 +4,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.DateFormatterRegistrar;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -36,6 +40,25 @@ public class AppWebConfiguration {
 		messageSource.setDefaultEncoding("UTF-8");// para evitar o problema de caracteres estranhos
 		messageSource.setCacheSeconds(1);// para que o Spring recarregue o arquivo de tempos em tempos
 		return messageSource;
+	}
+
+	// Imagine que em todo lugar que precisemos usar data precisaremos lembrar dessa
+	// formatação @DateTimeFormat(pattern = "dd/MM/yyyy") Esse será o padrão de toda
+	// aplicação.
+	// faremos essa nova configuração para que não precisemos ficar repetindo essa
+	// configuração de data em todos os atributos das outras classes do sistema
+	@Bean
+	public FormattingConversionService mvcConversionService() {
+		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();// responsável
+																										// pelo serviço
+																										// de conversão
+																										// de formato
+		DateFormatterRegistrar formatterRegistrar = new DateFormatterRegistrar();// fará o registro do formato de data
+																					// usado para a conversão
+		formatterRegistrar.setFormatter(new DateFormatter("dd/MM/yyyy"));
+		formatterRegistrar.registerFormatters(conversionService);
+
+		return conversionService;
 	}
 
 }

@@ -48,7 +48,11 @@ public class ProdutosController {
 	// informações das nossas classes modelos.
 	// envie a String "tipos" e os valores do enum TipoPreco a partir do método
 	// values()
-	public ModelAndView form() {
+	// public ModelAndView form() {
+	public ModelAndView form(Produto produto) {// O Spring precisa usar um objeto da classe Produto para poder exibir o
+												// formulário. Configuramos o form p/ guardar os dados mesmo qdo
+												// acontecer erros de validação. O Spring precisa de um objeto p/ poder
+												// armazenar esses dados e exibir o form, mesmo vazio.
 
 		ModelAndView modelAndView = new ModelAndView("produtos/form");// para que o Spring entenda qual o arquivo que
 																		// ele deverá retornar ao navegador.
@@ -70,7 +74,7 @@ public class ProdutosController {
 		// parâmetros do método com os names do formulário.
 
 		if (result.hasErrors()) {// se houver erros, voltaremos para o formulário
-			return form();
+			return form(produto);
 		}
 
 		produtoDao.gravar(produto);
