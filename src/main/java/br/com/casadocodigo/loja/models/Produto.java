@@ -34,6 +34,17 @@ public class Produto {
 	private List<Preco> precos; // precos podem ser de impresso, ebook ou ebook+impresso e além
 	// list: objeto: pode recebr null
 
+	private String sumarioPath; // guardar o arquivo de sumario nas pastas do sistema de arquivos do servidor.
+								// Nele será guardado apenas o caminho (path) do arquivo.
+
+	public String getSumarioPath() {
+		return sumarioPath;
+	}
+
+	public void setSumarioPath(String sumarioPath) {
+		this.sumarioPath = sumarioPath;
+	}
+
 	public int getId() {
 		return id;
 	}

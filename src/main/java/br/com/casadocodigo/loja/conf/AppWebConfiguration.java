@@ -8,15 +8,19 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
+import br.com.casadocodigo.loja.infra.FileSaver;
 
 @EnableWebMvc // anotamos que precisamos usar o recurso de Web MVC do SpringMVC
-@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class }) // array de classes de onde o SpringMVC
-																				// pode extrair os
+@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class }) // array de classes de
+																									// onde o SpringMVC
+// pode extrair os
 // pacotes nos quais ele pode encontrar os controllers
 // automaticamente
 // onfigurar para que encontre nossos daos também.
@@ -59,6 +63,15 @@ public class AppWebConfiguration {
 		formatterRegistrar.registerFormatters(conversionService);
 
 		return conversionService;
+	}
+
+	@Bean // configuração necessaria para receber arquivos. MultipartResolver se refere a
+			// um resolvedor de dados multimidia. Quando temos texto e arquivos por exemplo.
+			// Os arquivos podem ser: imagem, PDF e outros. Este objeto é que identifica
+			// cada um dos recursos enviados e nos fornece uma forma mais simples de
+			// manipulalos.
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 }

@@ -15,7 +15,7 @@
 
 <%-- <form action="/casadocodigo_spring/produtos" method="post"> --%>
 <%-- <form:form action="/casadocodigo/produtos" method="post" commandName="produto"><!-- commandName: formulário só trata de um produto especifico, não precisamos ficar repetindo a informação em todos os campos.podemos fazer uma referencia a qual entidade aquele formulário se refere --> --%>
-<form:form action="${s:mvcUrl('PC#gravar').build()}" method="post" commandName="produto">    
+<form:form action="${s:mvcUrl('PC#gravar').build()}" method="post" commandName="produto" enctype="multipart/form-data">  <!-- Requisições deste tipo podem fazer envios de arquivos, sendo estes de qualquer tipo -->  
  <!-- tag mvcUrl gera uma URL de acordo com um determinado controller. Se passarmos as iniciais PC para se referir a ProdutosController, o Spring já conseguirá fazer a relação entre os dois. -->   
     <div>
         <label>Título</label>        
@@ -55,6 +55,11 @@
             <form:hidden path="precos[${status.index}].tipo" value="${tipoPreco}" />
         </div>
     </c:forEach>
+    
+    <div>
+    <label>Sumário</label>
+    <input name="sumario" type="file" />
+	</div>
     
     <button type="submit">Cadastrar</button>
 <%-- </form> --%>
