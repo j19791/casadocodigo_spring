@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -129,6 +130,15 @@ public class ProdutosController {
 		modelAndView.addObject("produtos", produtos);// ModelAndView é uma classe do Spring que faz um relacionamento de
 														// um modelo (model) com uma visualização (view) . Podendo
 														// disponibilizar um objeto qualquer para a view
+		return modelAndView;
+	}
+
+	// @RequestMapping("/detalhe")
+	@RequestMapping("/detalhe/{id}") // utilizando urls amigaveis
+	public ModelAndView detalhe(@PathVariable("id") int id) { // o parâmetro id será recuperado do caminho da url
+		ModelAndView modelAndView = new ModelAndView("/produtos/detalhe");
+		Produto produto = produtoDao.find(id);
+		modelAndView.addObject("produto", produto);
 		return modelAndView;
 	}
 

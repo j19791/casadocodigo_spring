@@ -29,4 +29,16 @@ public class ProdutoDAO {
 																								// consulta ao banco de
 																								// dados.
 	}
+
+	public Produto find(int id) {
+		// return manager.find(Produto.class, id); ira dar erro de
+		// LazyInitializationException
+		// tratando LazyInitializationException: indica q ao carregar o produto, os
+		// preços não foram carregados juntos. Ou seja, tentamos exibir os preços sem
+		// carregá-los do bd. Isto acontece porque nosso ProdutoDAO no método find só
+		// busca o produto, sem se relacionar com seus preços.
+		// query planejada: produtos x precos
+		return manager.createQuery("select distinct(p) from Produto p join fetch p.precos precos where p.id = :id",
+				Produto.class).setParameter("id", id).getSingleResult();
+	}
 }
