@@ -14,6 +14,29 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity // definir que o produto é uma entidade para ser usado pelo JPA
 public class Produto {
 
+	// para utilizacao do carrinho de compras (produto item)
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // o hibernate obriga que toda entidade precisa de um id
 	private int id;

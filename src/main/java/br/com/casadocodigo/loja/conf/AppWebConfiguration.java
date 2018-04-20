@@ -16,10 +16,14 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
 import br.com.casadocodigo.loja.infra.FileSaver;
+import br.com.casadocodigo.loja.models.CarrinhoCompras;
 
 @EnableWebMvc // anotamos que precisamos usar o recurso de Web MVC do SpringMVC
-@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class }) // array de classes de
-																									// onde o SpringMVC
+@ComponentScan(basePackageClasses = { HomeController.class, ProdutoDAO.class, FileSaver.class, CarrinhoCompras.class }) // array
+																														// de
+																														// classes
+																														// de
+// onde o SpringMVC
 // pode extrair os
 // pacotes nos quais ele pode encontrar os controllers
 // automaticamente
@@ -32,6 +36,12 @@ public class AppWebConfiguration {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/"); // pasta aonde q estao as views
 		resolver.setSuffix(".jsp"); // extensao do arquivo da view. nao precisa digita-lo no controller
+
+		//// resolver.setExposeContextBeansAsAttributes(true); deixa todos os beans
+		//// expostos
+		resolver.setExposedContextBeanNames("carrinhoCompras"); // Para que possamos acessar o Bean carrinhoCompras em
+																// nossas views (no caso: detalhes)
+
 		return resolver;
 	}
 
