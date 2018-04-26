@@ -3,9 +3,19 @@ package br.com.casadocodigo.loja.models;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
-@Component // p/ q o Spring instancie o carrinhoComprar qdo necessário
+@Component // p/ q o Spring instancie o carrinhoComprar qdo necessário. transformando nossa
+			// classe em um Bean do Spring
+// Por padrão, estamos também configurando que este objeto será Singleton: unico
+// carrinho de compras p/ todos os usuários
+@Scope(value = WebApplicationContext.SCOPE_SESSION) // Qdo se faz necessário q um recurso seja individual, ( único para
+													// cada usuário) definimos os recursos com o escopo de
+													// sessão: criado a partir do momento em que o usuário entra
+													// em uma determinada aplicação e segue até o encerramento da mesma
+													// - ou ao fechar do navegador em alguns casos.
 public class CarrinhoCompras {
 
 	// o selecionarmos determinado produto, podemos também especificar a quantidade.
